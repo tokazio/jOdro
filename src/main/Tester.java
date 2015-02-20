@@ -21,8 +21,8 @@ public class Tester{
     
     private static final int delay = 500;
     
-    static GPIOPin led;
-    static GPIOPin in;
+    GPIOPin led;
+    GPIOPin in;
     
     public void startTest() {
         led = new GPIOPin(OdroPin.GPIO_24, PinMode.OUT, PinState.LOW);

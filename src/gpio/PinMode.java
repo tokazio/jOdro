@@ -38,7 +38,7 @@ public enum PinMode {
     }
     
     /**
-    * @return Returns the state as a int value.
+    * @return Returns the mode as a int value.
     * 0 for In or a 1 for Out.
     */
     public int toInt(){
@@ -46,7 +46,7 @@ public enum PinMode {
     }
     
     /**
-    * @return Returns the state as a String value.
+    * @return Returns the mode as a String value.
     * Output for out or a Input for input.
     */
     @Override
