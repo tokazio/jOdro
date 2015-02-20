@@ -49,4 +49,4 @@ Than you can minpulate or read the Pin (see at the table below).
 
 At the end of the programm you have to shutdown the pins. This resets the pins to default (low and input) and unexports it.
 
-#For a full list of all Features see: Core Functions
+<b>For a full list of all Features see: Core Functions</b>
