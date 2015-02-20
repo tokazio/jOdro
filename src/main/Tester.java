@@ -5,7 +5,6 @@
  */
 package main;
 
-import gpio.GPIOListener;
 import gpio.GPIOPin;
 import gpio.OdroPin;
 import gpio.PinMode;
@@ -17,33 +16,31 @@ import java.util.logging.Logger;
  *
  * @author Michi
  */
-public class Tester implements GPIOListener{
+public class Tester{
     
     
-    private static int delay = 500;
+    private static final int delay = 500;
     
     static GPIOPin led;
+    static GPIOPin in;
     
     public void startTest() {
         led = new GPIOPin(OdroPin.GPIO_24, PinMode.OUT, PinState.LOW);
-        led.addGPIOListener(this);
+        in = new GPIOPin(OdroPin.GPIO_23, PinMode.IN);
         
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             led.shutdown();
+            in.shutdown();
         }));
         
         while(true){
             led.toggle();
+            System.out.println(in.read());
             try {
                 Thread.sleep(delay);
             } catch (InterruptedException ex) {
                 Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-    }
-
-    @Override
-    public void valueChanged(GPIOPin pin) {
-        System.out.println("Changed Value of "+pin.getPin().name()+" to: "+pin.getState().toString());
     }
 }

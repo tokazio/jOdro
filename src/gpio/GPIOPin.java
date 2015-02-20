@@ -14,8 +14,6 @@ public class GPIOPin {
     private OdroPin pin;
     private PinMode mode;
     private PinState state;
-    
-    private GPIOFileReader reader;
 
     public GPIOPin(OdroPin pin, PinMode mode) {
         this(pin, mode, PinState.LOW);
@@ -24,18 +22,8 @@ public class GPIOPin {
     public GPIOPin(OdroPin pin, PinMode mode, PinState state) {
         this.pin = pin;
         this.mode = mode;
-        this.reader = new GPIOFileReader(this);
         this.export();
         this.direction();
-        this.listen();
-    }
-
-    /**
-    * Add a listener to the pin. The Listeners are notified, when the state of the pin changed.
-    * @param l The Listener for any Changes of the GPIO state.
-    */
-    public void addGPIOListener(GPIOListener l){
-        this.reader.addListener(l);
     }
     
     /**
@@ -67,6 +55,14 @@ public class GPIOPin {
     }
 
     /**
+    * @return Reads the input of the pin
+    */
+    public PinState read() {
+        this.readValue();
+        return this.state;
+    }
+    
+    /**
     * Sets the properties back to the default values and unexports it. The mode of the Pin is set to input.
     * The state of the Pin is set to low. At the end its unexported.
     */
@@ -92,13 +88,6 @@ public class GPIOPin {
         return this.mode;
     }
 
-    /**
-    * @return Returns the State of the GPIO Pin. High or Low
-    */
-    public PinState getState() {
-        return this.state;
-    }
-
     private void export() {
         String[] export = {"sudo", "/bin/sh", "-c", "echo " + this.pin.getOdroidCode() + " > /sys/class/gpio/export"};
         CmdExecutor.execute(export);
@@ -119,7 +108,13 @@ public class GPIOPin {
         CmdExecutor.execute(high);
     }
 
-    private void listen() {
-        this.reader.start();
+    private void readValue() {
+        String out = CmdExecutor.execute("cat /sys/class/gpio/gpio" + this.pin.getOdroidCode() + "/value ");
+        System.out.println(out.split("\n")[0]);
+        if (out.split("\n")[0].equals(PinState.HIGH.getCode())) {
+            this.state = PinState.HIGH;
+        } else {
+            this.state = PinState.LOW;
+        }
     }
 }

@@ -5,14 +5,6 @@
  */
 package main;
 
-import gpio.GPIOListener;
-import gpio.GPIOPin;
-import gpio.OdroPin;
-import gpio.PinMode;
-import gpio.PinState;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  *
  * @author Michi
