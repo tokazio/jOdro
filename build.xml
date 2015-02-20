@@ -11,14 +11,6 @@
     <description>Builds, tests, and runs the project jGPIO.</description>
     <import file="nbproject/build-impl.xml"/>
 
-    <target name="-post-jar">
-      <scp todir="chromo:Geheimnis@192.168.1.128:/home/chromo/gpio">
-        <fileset dir="/Users/Michi/Seafile/Programme/jOdro/dist/">
-          <include name="jOdro.jar"/>
-        </fileset>
-      </scp>
-    </target>
-
     <!--
 
     There exist several targets which are by default empty and which can be
